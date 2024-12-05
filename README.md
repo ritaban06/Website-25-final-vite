@@ -13,8 +13,8 @@
   
 </div>
 
-<!--  [Visit Here!](https://www.samarthtmsl.live/) -->
-<h2 align="centre" > <a href="https://www.samarthtmsl.live/"> Visit Here</h2>
+<!--  [Visit Here!](https://samarthtmsl-website.vercel.app/) -->
+<h2 align="centre" > <a href="https://samarthtmsl-website.vercel.app/"> Visit Here</h2>
   
 # 💫Members of the Tech Team ->
 
