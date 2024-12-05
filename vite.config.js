@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     // Define rewrites here for development purposes
-    middlewareMode: 'html',
+    // middlewareMode: 'html',
     proxy: {
       '/': {
         target: '/index.html',
