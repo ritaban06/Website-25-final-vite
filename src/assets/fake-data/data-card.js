@@ -1,14 +1,14 @@
 
-const img1 = 'src/assets/images/new/card1.webp'
-const img2 = 'src/assets/images/new/card02.gif'
-const img3 = 'src/assets/images/new/card6.webp'
-const img4 = 'src/assets/images/new/card3.webp'
-const img5 = 'src/assets/images/new/card5.webp'
-const img6 = 'src/assets/images/new/card7.webp'
-const img7 = 'src/assets/images/new/card8.webp'
+const img1 = '/images2/new/card1.webp'
+const img2 = 'images2/new/card02.gif'
+const img3 = '/images2/new/card6.webp'
+const img4 = '/images2/new/card3.webp'
+const img5 = '/images2/new/card5.webp'
+const img6 = '/images2/new/card7.webp'
+const img7 = '/images2/new/card8.webp'
 
 
-const logo = 'src/assets/images/new/newlogo.webp'
+const logo = '/images2/new/newlogo.webp'
 
 
 
