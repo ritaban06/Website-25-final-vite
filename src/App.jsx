@@ -1,5 +1,3 @@
-
-
 import {React , useEffect} from 'react';
 import AOS from 'aos';
 import { Route, Routes } from 'react-router-dom';
@@ -39,8 +37,8 @@ function App() {
             <ScrollToTop />
 
             <Footer />
-            <Analytics />
-            <SpeedInsights/>
+            {/* <Analytics />
+            <SpeedInsights/> */}
     
         </>
     );

@@ -9,15 +9,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.Fragment>
     <BrowserRouter>
-      <Routes>
-        {routes.map((route) => (
-          <Route 
-            key={route.path} 
-            path={route.path} 
-            element={route.component} 
-          />
-        ))}
-      </Routes>
+      <App/>
     </BrowserRouter>
   </React.Fragment>
 );
