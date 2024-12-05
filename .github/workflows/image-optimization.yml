@@ -1,0 +1,74 @@
+name: Image Optimization and Conversion
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  optimize-and-convert:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+          
+      - name: Install WebP Tools
+        run: sudo apt-get update && sudo apt-get install webp -y
+        
+      - name: Convert Images to WebP and Remove Originals
+        run: |
+          find . -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) \
+          -not -path "*/node_modules/*" \
+          -not -path "*/.github/*" \
+          -not -path "*/dist/*" \
+          -not -path "*/build/*" \
+          -not -path "*/public/images2/new/guest*" \
+          -exec sh -c '
+            for file do
+              webp_path="${file%.*}.webp"
+              if [ ! -f "$webp_path" ]; then
+                if cwebp -q 60 "$file" -o "$webp_path"; then
+                  echo "Converted $file to $webp_path"
+                  rm "$file"
+                  echo "Removed original file: $file"
+                else
+                  echo "Failed to convert $file"
+                fi
+              fi
+            done
+          ' sh {} +
+
+      - name: Optimize WebP Images
+        uses: calibreapp/image-actions@main
+        with:
+          webpQuality: 50
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          ignorePaths: |
+            node_modules/**
+            .github/**
+            **/dist/**
+            **/build/**
+            **/public/images2/new/guest**
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          git add -A
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          
+          git commit -m "Convert images to WebP and remove original files"
+          git pull --rebase origin ${{ github.head_ref }}
+          git push origin HEAD:${{ github.head_ref }}
