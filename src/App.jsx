@@ -9,8 +9,8 @@ import routes from './pages';
 import Page404 from './pages/404';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
+// import { Analytics } from '@vercel/analytics/react';
+// import { SpeedInsights } from '@vercel/speed-insights/react';
 
 function App() {
 
