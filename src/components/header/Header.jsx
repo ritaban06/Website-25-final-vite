@@ -10,36 +10,48 @@ const Header = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [exploreSubMenuActive, setExploreSubMenuActive] = useState(false);
 
+  const location = useLocation();
+
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      setScroll(window.scrollY > 300);
-    });
-    return () => {
-      setScroll({});
-    };
+    const handleScroll = () => setScroll(window.scrollY > 300);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleMenuActive = () => {
-    setMenuActive(!menuActive);
-  };
+  const handleMenuActive = () => setMenuActive(!menuActive);
 
-  const handleDropdown = (index) => {
-    if (activeIndex === index) {
-      setActiveIndex(null);
-    } else {
-      setActiveIndex(index);
-    }
-  };
+  const handleDropdown = (index) =>
+    setActiveIndex(activeIndex === index ? null : index);
 
-  const toggleExploreSubMenu = () => {
+  const toggleExploreSubMenu = () =>
     setExploreSubMenuActive(!exploreSubMenuActive);
-  };
-
-  const location = useLocation();
 
   const handleCloseMenu = () => {
     setMenuActive(false);
     setActiveIndex(null);
+  };
+
+  const renderLink = (item, closeMenuCallback) => {
+    if (item.external) {
+      return (
+        <a
+          href={item.external}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={closeMenuCallback}
+        >
+          {item.name || item.sub}
+          {item.isNew && <span className="new-text">NEW</span>}
+        </a>
+      );
+    }
+    const Component = item.links ? Link : NavLink;
+    return (
+      <Component to={item.links} onClick={closeMenuCallback}>
+        {item.name || item.sub}
+        {item.isNew && <span className="new-text">NEW</span>}
+      </Component>
+    );
   };
 
   return (
@@ -48,72 +60,69 @@ const Header = () => {
         <div className="row">
           <div className="col-12">
             <div className="header__body">
+              {/* Logo */}
               <div className="header__logo">
                 <Link to="/">
-                  <img
-                    id="site-logo"
-                    className="custom-logo"
-                    src={logo}
-                    alt="logo"
-                  />
+                  <img id="site-logo" className="custom-logo" src={logo} alt="logo" />
                 </Link>
                 <p className="logo-text">SAMARTH</p>
               </div>
 
+              {/* Navigation */}
               <div className="header__right">
-                <nav
-                  id="main-nav"
-                  className={`main-nav ${menuActive ? "active" : ""}`}
-                >
+                <nav id="main-nav" className={`main-nav ${menuActive ? "active" : ""}`}>
                   <ul id="menu-primary-menu" className="menu">
-                    {menus.map((data, idx) => (
+                    {menus.map((menuItem, idx) => (
                       <li
                         key={idx}
                         onClick={() => handleDropdown(idx)}
-                        className={`menu-item ${data.namesub ? "menu-item-has-children" : ""
-                          } ${activeIndex === idx ? "active" : ""}`}
-                      id={`${data.name==='Study Material' ? 'study-relative':''}`}>
-                        <div className={`explore ${data.name === "Explore" ? 'flex-column':''}`}>
-                          {data.name === "Explore" ? (
+                        className={`menu-item ${
+                          menuItem.namesub ? "menu-item-has-children" : ""
+                        } ${activeIndex === idx ? "active" : ""}`}
+                        id={menuItem.name === "Study Material" ? "study-relative" : ""}
+                      >
+                        <div
+                          className={`explore ${
+                            menuItem.name === "Explore" ? "flex-column" : ""
+                          }`}
+                        >
+                          {menuItem.name === "Explore" && menuItem.namesub ? (
                             <div className="d-flex flex-row">
-                            <a onClick={toggleExploreSubMenu}>
-                              {data.name}
-                              
-                            </a>
-                            {data.namesub &&
-                              data.namesub.some((sub) => sub.isNew) && (
+                              <a onClick={toggleExploreSubMenu}>{menuItem.name}</a>
+                              {menuItem.namesub.some((sub) => sub.isNew) && (
                                 <span className="new-text">NEW</span>
                               )}
                             </div>
                           ) : (
-                            <Link to={data.links} onClick={handleCloseMenu}>
-                              {data.name}
-                            </Link>
+                            renderLink(menuItem, handleCloseMenu)
                           )}
-                          {data.namesub && (
+
+                          {/* Submenu */}
+                          {menuItem.namesub && (
                             <ul
-                              className={`sub-menu ${activeIndex === idx && exploreSubMenuActive ? "active" : ""
-                                }`}
+                              className={`sub-menu ${
+                                activeIndex === idx && exploreSubMenuActive ? "active" : ""
+                              }`}
                             >
-                              {data.namesub.map((submenu) => (
+                              {menuItem.namesub.map((submenu) => (
                                 <li key={submenu.id} className="menu-item">
-                                  <NavLink to={submenu.links} onClick={handleCloseMenu}>
-                                    {submenu.sub}
-                                    {submenu.isNew ? <span className="new-text my-auto">NEW</span> : <></>}
-                                  </NavLink>
+                                  {renderLink(submenu, handleCloseMenu)}
                                 </li>
                               ))}
                             </ul>
                           )}
-                           {data.isNew &&
+
+                          {/* Main menu NEW badge */}
+                          {!menuItem.namesub && menuItem.isNew && (
                             <span className="new-text">NEW</span>
-                          }
+                          )}
                         </div>
-                        
                       </li>
                     ))}
                   </ul>
                 </nav>
+
+                {/* Mobile menu button */}
                 <div
                   className={`mobile-button ${menuActive ? "active" : ""}`}
                   onClick={handleMenuActive}
@@ -122,6 +131,7 @@ const Header = () => {
                 </div>
               </div>
 
+              {/* Header action buttons */}
               <div className="header__action">
                 <Link to="#" className="search-btn">
                   {/* Search icon SVG */}

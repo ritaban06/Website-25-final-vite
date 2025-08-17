@@ -25,10 +25,8 @@ const menus = [
             {
                 id: 1,
                     sub: 'Events',
-                    links: 'https://event.ritaban.me/',
+                    external: "https://event.ritaban.me/",
                     isNew: true, // Added property to indicate whether to show "NEW" blinker
-                    target: '_blank', // Open in new tab
-                    rel: 'noopener noreferrer' // Security best practice
             },
             {
                 id: 2,
