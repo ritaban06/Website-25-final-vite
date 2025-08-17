@@ -49,7 +49,6 @@ const Header = () => {
     return (
       <Component to={item.links} onClick={closeMenuCallback}>
         {item.name || item.sub}
-        {item.isNew && <span className="new-text">NEW</span>}
       </Component>
     );
   };
