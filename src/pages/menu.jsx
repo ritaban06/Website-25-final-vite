@@ -25,7 +25,7 @@ const menus = [
             {
                 id: 1,
                 sub: 'Events',
-                links: '/events',
+                links: 'https://event.ritaban.me/',
                 isNew: true // Added property to indicate whether to show "NEW" blinker
             },
             {
