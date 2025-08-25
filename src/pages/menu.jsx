@@ -9,7 +9,7 @@ const menus = [
         id: 7,
         name: 'Study Material',
         links: '/study',
-        isNew: 'true',
+        // isNew: 'true',
     },
 
     {
@@ -18,16 +18,16 @@ const menus = [
         links: '/About',
     },
     {
+        id: 8,
+        name: 'Events',
+        external: 'https://event.ritaban.me/',
+        // isNew: true,
+    },
+    {
         id: 3,
         name: 'Explore',
         links: '#',
         namesub: [
-            {
-                id: 1,
-                    sub: 'Events',
-                    external: "https://event.ritaban.me/",
-                    isNew: true, // Added property to indicate whether to show "NEW" blinker
-            },
             {
                 id: 2,
                 sub: 'Activity',
