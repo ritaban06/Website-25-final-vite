@@ -11,6 +11,13 @@ const menus = [
         links: '/study',
         // isNew: 'true',
     },
+    
+    {
+        id: 9,
+        name: ' ',
+        links: '#',
+        className: 'menu-spacing', // Add a class for styling if needed
+    },
 
     {
         id: 2,
