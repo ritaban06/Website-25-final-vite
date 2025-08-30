@@ -27,7 +27,7 @@ const menus = [
     {
         id: 8,
         name: 'Events',
-        external: 'https://event.ritaban.me/',
+        external: 'https://event.ritaban.me',
         // isNew: true,
     },
     {
